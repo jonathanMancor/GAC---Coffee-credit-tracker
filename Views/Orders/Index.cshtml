@@ -1,0 +1,255 @@
+﻿@using System.Globalization;
+@model IList<Coffee_Project.Models.Order>
+
+
+
+@{
+    ViewData["Title"] = "Index";
+    var count = 0;
+}
+
+<div class="container text-center">
+
+    <br />
+
+    <div class="d-flex justify-content-center">
+        <p>
+            @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+            {
+                <span style="font-weight:bold">Your Credit is</span>
+            }
+            else
+            {
+                <span style="font-weight:bold">Votre crédit est de</span>
+            }: <span style="font-weight:bold">@ViewBag.Credit</span>
+        </p>
+        <br />
+    </div>
+
+
+    <div class="d-flex justify-content-center ">
+        @if (ViewBag.Credit <= 1)
+        {
+            <label class="alert-danger">
+
+                @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+                {
+                    <span>Please contact your manager to add credits to your balance</span>
+                }
+                else
+                {
+                    <span>Veuillez contacter votre responsable pour ajouter des crédits à votre solde</span>
+                }
+
+
+            </label>
+        }
+    </div>
+
+    <form asp-action="ProccessOrder" asp-controller="Orders">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            count++;
+            <input type="hidden" asp-for="@Model[i].DrinkType">
+            <input type="hidden" asp-for="@Model[i].Price">
+            <input type="hidden" asp-for="@Model[i].Id">
+
+            <h4 class="text-center">
+                @if (Model[i].DrinkType == Coffee_Project.Data.DrinkType.Coffe)
+                {
+                    if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+                    {
+                        <div class="d-flex justify-content-center">
+                            <span>Coffee</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-center">
+                            <span>Café</span>
+                        </div>
+                    }
+                    <br />
+                    <div class="row">
+                        <div class="d-flex justify-content-center">
+                            <img src="~/img/coffee.png " width="200em" height="200em" style="margin-top: -1em;">
+                        </div>
+                    </div>
+
+                }
+                else if (Model[i].DrinkType == Coffee_Project.Data.DrinkType.Tea)
+                {
+                    if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+                    {
+                        <div class="d-flex justify-content-center">
+                            <span>Tea</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-center">
+                            <span>Thé</span>
+                        </div>
+                    }
+                    <br />
+                    <div class="d-flex justify-content-center" >
+                        <img src="~/img/tea.png" width="215em" height="200em" style="margin-top: -1em; margin-left:1em">
+                    </div>
+                }
+
+            </h4>
+
+
+            @*Image*@
+            @*<div class="row">
+        <div class="col-6">
+        <img src="~/img/tea.png" width="200" height="200">
+        </div>
+        </div>*@
+
+            <div class="form-control-group" style="margin-bottom:40px;">
+
+                <button type="button" class="btn btn-outline-secondary btn-number" data-type="minus" data-field="quant_@count" style="padding-top:4px; background-color:red; color:white;">
+                    <i class="bi bi-minus"><b>-</b></i>
+                </button>
+
+
+                <input type="text" asp-for="@Model[i].Count" id="quant_@count" class="form-control-group input-number text-center" min="0" max="100" style="width:90px;padding-bottom:6px; d">
+
+
+                <button class="btn btn-outline-secondary btn-number " data-type="plus" data-field="quant_@count" style="padding-top:4px; background-color:green; color:white;">
+                    <i class="bi bi-plus"><b>+</b></i>
+                </button>
+            </div>
+
+
+
+
+
+            @* <div class="d-inline">
+        <span class="input-group-btn">
+        <button type="button" class="btn btn-outline-secondary btn-number btn_m" data-type="minus" data-field="quant_@count">
+        <i class="fa fa-minus"></i>
+        </button>
+        </span>
+
+        <input type="text" asp-for="@Model[i].Count" id="quant_@count" class="form-control input-number " min="0" max="100" style="width:50px;">
+
+        <span class="input-group-btn">
+        <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant_@count">
+        <i class="fa fa-plus-square"></i>
+        </button>
+        </span>
+        </div>*@
+
+
+
+        }
+        <div class="d-flex justify-content-center">
+            @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+            {
+                <div class="form-group">
+                    <input type="submit" value="Order Now" class="btn btn-success" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <input type="submit" value="Commander" class="btn btn-success" />
+                </div>
+            }
+        </div>
+
+    </form>
+
+</div>
+
+
+@section scripts {
+
+    <script>
+
+        $('.btn-number').click(function (e) {
+
+            e.preventDefault();
+
+            fieldName = $(this).attr('data-field');
+            type = $(this).attr('data-type');
+            var input = $("#" + fieldName);
+            console.log(input);
+            var currentVal = parseInt(input.val());
+            if (!isNaN(currentVal)) {
+                if (type == 'minus') {
+
+                    if (currentVal > input.attr('min')) {
+                        input.val(currentVal - 1).change();
+                    }
+                    if (parseInt(input.val()) == input.attr('min')) {
+                        $(this).attr('disabled', true);
+                    }
+
+                } else if (type == 'plus') {
+
+                    if (currentVal < input.attr('max')) {
+                        input.val(currentVal + 1).change();
+                    }
+                    if (parseInt(input.val()) == input.attr('max')) {
+                        $(this).attr('disabled', true);
+                    }
+
+                }
+            } else {
+                input.val(0);
+            }
+        });
+        $('.input-number').focusin(function () {
+            $(this).data('oldValue', $(this).val());
+        });
+        $('.input-number').change(function () {
+
+            minValue = parseInt($(this).attr('min'));
+            maxValue = parseInt($(this).attr('max'));
+            valueCurrent = parseInt($(this).val());
+
+            name = $(this).attr('id');
+            if (valueCurrent >= minValue) {
+                $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled')
+            } else {
+                alert('Sorry, the minimum value was reached');
+                $(this).val($(this).data('oldValue'));
+            }
+            if (valueCurrent <= maxValue) {
+                $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr('disabled')
+            } else {
+                alert('Sorry, the maximum value was reached');
+                $(this).val($(this).data('oldValue'));
+            }
+
+
+        });
+        $(".input-number").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+}
+
+
+    <style>
+        .center {
+            width: 150px;
+            margin: 40px auto;
+        }
+    </style>

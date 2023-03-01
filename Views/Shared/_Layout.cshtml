@@ -1,0 +1,83 @@
+﻿@using System.Globalization;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Coffee Club</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/Coffee_Project.styles.css" asp-append-version="true" />*@
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+<body>
+    <header>
+
+        <nav class="navbar p-2" style="background-color:#009ca9">
+
+            @*                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>*@
+            @*<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">*@
+
+            <a class="navbar-brand" asp-area="" asp-controller="Orders" asp-action="Index"><h1 class="text-light">Coffee Club</h1></a>
+            @*@if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+            {
+
+                <a class="navbar-brand h1" asp-area="" asp-controller="Orders" asp-action="Index">Coffee Club</a>
+
+
+            }
+            else
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Orders" asp-action="Index">Coffee Club</a>
+
+            }*@
+
+
+            @*    <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="Index">Manager</a>
+            </li>*@
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <partial name="_SelectLanguagePartial" />
+                </li>
+                <partial name="_LoginPartial" />
+            </ul>
+            @*</div>*@
+
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    @*
+    <footer class="border-top footer text-muted">
+    @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+    {
+    <div class="container">
+    &copy; 2022 - Coffee Club
+    </div>
+    }
+    else
+    {
+    <div class="container">
+    &copy; 2022 - Coffee Club
+    </div>
+    }
+    </footer>
+    *@
+
+    @*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha384-rY/jv8mMhqDabXSo+UCggqKtdmBfd3qC2/KvyTDNQ6PcUJXaxK1tMepoQda4g5vB" crossorigin="anonymous"></script>
+    <script src="https://wet-boew.github.io/themes-dist/GCWeb/wet-boew/js/wet-boew.min.js"></script>
+    <script src="https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/js/theme.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

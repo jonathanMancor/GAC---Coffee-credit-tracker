@@ -1,0 +1,40 @@
+﻿@using Coffee_Project.Data
+@using Microsoft.AspNetCore.Identity
+@using System.Globalization;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-light" src="#">Hello @User.Identity?.Name!</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bonjour @User.Identity?.Name!</a>
+            </li>
+        }
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+            {
+                <button type="submit" class="nav-link btn text-light btn-danger p-1 m-.25" style="margin-left: 60%;">Logout</button>
+            }
+            else
+            {
+            <button type="submit" class="nav-link btn text-light p-1 btn-danger" style="margin-left: 40%;">Déconnecter</button>
+            }
+
+
+        </form>
+
+    }
+    else
+    {
+
+
+    }

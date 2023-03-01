@@ -1,0 +1,58 @@
+﻿@using System.Globalization;
+@{
+    ViewData["Title"] = "ProccessOrder";
+}
+<br />
+<br />
+<br />
+<br />
+@if (ViewBag.IsDone == "0")
+{
+    <div class="d-flex justify-content-center">
+        <span class="material-symbols-rounded" style="color:red; font-size:10em">
+            cancel
+        </span>
+    </div>
+    // error
+    @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+    {
+        <h4 class="text-center">An error occured while processing your order!</h4>
+        <div class="d-flex justify-content-center">
+            <a asp-action="Index">Back to List</a>
+        </div>
+    }
+    else
+    {
+        <h4 class="text-center">Veuillez contacter votre responsable pour ajouter des crédits à votre solde!</h4>
+        <div class="d-flex justify-content-center">
+            <a asp-action="Index">Retour</a>
+        </div>
+    }
+}
+else
+{
+    <div class="d-flex justify-content-center">
+        <span class="material-symbols-rounded " style="color:green; font-size:10em">
+            check_circle
+        </span>
+    </div>
+    @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+    {
+
+        <h4 class="text-center">You can enjoy your drink(s) now!</h4>
+        <div class="d-flex justify-content-center">
+            <a asp-action="Index">Go Back to List</a>
+        </div>
+    }
+    else
+    {
+        <h4 class="text-center">Vous pouvez profiter de votre breuvage(s) maintenant!</h4>
+        <div class="d-flex justify-content-center">
+            <a asp-action="Index">Retour</a>
+        </div>
+    }
+}
+
+
+
+
